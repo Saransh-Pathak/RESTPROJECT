@@ -5,6 +5,7 @@ import com.scaler.demo123.exceptions.ProductNotFoundException;
 import com.scaler.demo123.exceptions.ProductNotUpdatedException;
 import com.scaler.demo123.models.Product;
 import com.scaler.demo123.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,34 +13,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ProductController {
-
-    // CRUD api's around products
+public class ProjectControllerForFS {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProjectControllerForFS(@Qualifier("fakeStoreProductService") ProductService productService) {
         this.productService = productService;
     }
 
     //@RequestMapping(value ="/products", method = RequestMethod.POST)
-    @PostMapping("/products")
+    @PostMapping("/productsfromFS")
     public Product createProduct(@RequestBody Product product) {
-            Product newProduct = productService.createProduct(product.getId(),product.getTitle(),product.getDescription()
-                    ,product.getPrice(),product.getImageUrl(),product.getCategory().getTitle());
-            return newProduct;
+        System.out.println("Creating product of FakeStore" );
+        Product newProduct = productService.createProduct(product.getTitle(),product.getDescription()
+                ,product.getPrice(),product.getImageUrl(),product.getCategory().getTitle());
+        return newProduct;
     }
 
-    @GetMapping("/products")
+    @GetMapping("/productsallfromFS")
     public List<Product> getAllProducts() {
-
         return productService.getAllProducts();
     }
 
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/productsfromFS/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
-        //System.out.println("Starting API here");
+//        //System.out.println("Starting API here");
 
         Product p = productService.getSingleProductById(id);
 
@@ -49,14 +48,14 @@ public class ProductController {
         return responseEntity;
     }
 
-    @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id,@RequestBody Product product) throws ProductNotUpdatedException{
-        Product p = productService.updateProduct(id,product);
-        ResponseEntity<Product> responseEntity = new ResponseEntity<>(p, HttpStatus.CREATED);
-        return responseEntity;
-    }
+    @PutMapping("/updateproductsfromFS/{id}")
+//    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id,@RequestBody Product product) throws ProductNotFoundException{
+//      Product p = productService.updateProduct(id,product);
+//      ResponseEntity<Product> responseEntity = new ResponseEntity<>(p, HttpStatus.CREATED);
+//      return responseEntity;
+//    }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/productsfromFS/{id}")
     public ResponseEntity<Product> deleteProductById(@PathVariable("id") Long id) {
         System.out.println("Starting API of delete here");
 
@@ -67,14 +66,14 @@ public class ProductController {
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorDto> handleProductNotFoundException(Exception e) {
-            ErrorDto dto = new ErrorDto();
-            dto.setMessage(e.getMessage());
+        ErrorDto dto = new ErrorDto();
+        dto.setMessage(e.getMessage());
 
-            ResponseEntity<ErrorDto> responseEntity = new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
-            return responseEntity;
+        ResponseEntity<ErrorDto> responseEntity = new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        return responseEntity;
     }
 
-   @ExceptionHandler(ProductNotUpdatedException.class)
+    @ExceptionHandler(ProductNotUpdatedException.class)
     public ResponseEntity<ErrorDto> handleProductNotUpdatedException(Exception e) {
         ErrorDto dto = new ErrorDto();
         dto.setMessage(e.getMessage());

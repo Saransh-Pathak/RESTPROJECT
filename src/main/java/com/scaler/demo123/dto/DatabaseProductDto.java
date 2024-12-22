@@ -1,29 +1,22 @@
-package com.scaler.demo123.models;
+package com.scaler.demo123.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
+import com.scaler.demo123.models.Category;
 
-@Entity
-public class Product extends BaseModel {
-    //private long id;
+public class DatabaseProductDto {
+    private long id;
     private String title;
     private String description;
     private Double price;
-    @ManyToOne
-    private Category category;
+    private String category;
     private String imageUrl;
 
-    //public Product() {
-    //}
-
-
-    public Product() {
+    public long getId() {
+        return id;
     }
 
-
-
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -49,11 +42,11 @@ public class Product extends BaseModel {
         this.price = price;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -63,16 +56,5 @@ public class Product extends BaseModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", category=" + category.getTitle() +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
     }
 }

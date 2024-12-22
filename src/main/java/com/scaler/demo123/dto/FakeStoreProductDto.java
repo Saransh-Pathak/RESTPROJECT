@@ -15,14 +15,14 @@ public class FakeStoreProductDto {
 
         public Product getProduct() {
             Product product = new Product();
-            product.setId(id);
+            //product.setId(id);
             product.setTitle(title);
             product.setDescription(description);
             product.setPrice(price);
             product.setImageUrl(image);
 
             Category cat = new Category();
-            cat.setId(id);
+           // cat.setId(id);
             cat.setTitle(category);
             product.setCategory(cat);
 
@@ -30,8 +30,8 @@ public class FakeStoreProductDto {
         }
 
     public Long getId() {
-        return id;
-        }
+       return id;
+       }
 
     public void setId(Long id) {
         this.id = id;

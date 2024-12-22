@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
     private RestTemplate restTemplate;
@@ -50,9 +50,10 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(Long id, String name, String description, Double price, String imageUrl, String category) {
+    public Product createProduct(String name, String description, Double price, String imageUrl, String category) {
         FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
-        fakeStoreProductDto.setId(id);
+        //fakeStoreProductDto.setId(id);
+        //Long id
         fakeStoreProductDto.setTitle(name);
         fakeStoreProductDto.setDescription(description);
         fakeStoreProductDto.setPrice(price);
